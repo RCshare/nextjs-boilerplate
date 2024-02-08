@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && ./node_modules/.bin/sentry-cli releases --org YOUR_ORG_SLUG --project YOUR_PROJECT_NAME files 'release_name' upload-sourcemaps .next"
+    "build": "next build && ./node_modules/.bin/sentry-cli releases --org YOUR_ORG_SLUG --project YOUR_PROJECT_NAME files 'release_name' upload-sourcemaps .next",
     "start": "next start",
     "lint": "next lint"
   },
