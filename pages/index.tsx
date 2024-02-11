@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 
 // Initialisation de Sentry
 Sentry.init({
   dsn: "https://10ccd191a3295803134853079761bdcb@o4506240525598720.ingest.sentry.io/4506713417711616",
   integrations: [
-    Sentry.browserTracingIntegration(),
-    Sentry.replayIntegration({
-      maskAllText: false,
-      blockAllMedia: false,
-    }),
+    new Integrations.BrowserTracing(), // Correct integration setup
+    // Replay Integration is not directly available as shown in your initial code. If you're looking to use Sentry's session replay feature, you'll need to ensure you're using the correct SDK and feature set. Sentry's Session Replay might require additional setup or a different approach.
   ],
   // Performance Monitoring
-  tracesSampleRate: 1.0, //  Capture 100% of the transactions
-  // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
+  tracesSampleRate: 1.0, // Capture 100% of transactions
+  // Define which URLs distributed tracing should be enabled for
   tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
   // Session Replay
-  replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-  replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+  replaysSessionSampleRate: 0.1, // Sample rate at 10%. Adjust based on environment and needs.
+  replaysOnErrorSampleRate: 1.0, // 100% sample rate for sessions with errors.
 });
 
 const LoginForm: React.FC = () => {
@@ -29,17 +27,13 @@ const LoginForm: React.FC = () => {
     event.preventDefault();
 
     try {
-      // Simulating login process, replace this with your actual login logic
+      // Simulate login process, replace with actual login logic
       if (email !== 'test@example.com' || password !== 'password') {
         throw new Error('Invalid credentials');
       }
-
-      // If login is successful, do something (like redirect)
+      // If login is successful, proceed with the application flow
     } catch (error) {
-      // Log error to Sentry
-      Sentry.captureException(error);
-
-      // Set error state to display to the user
+      Sentry.captureException(error); // Log error to Sentry
       setError('An error occurred during login. Please try again.');
     }
   };
@@ -73,4 +67,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default Sentry.withProfiler(LoginForm); // This line integrates Sentry performance monitoring
+export default Sentry.withProfiler(LoginForm); // Integrates Sentry performance monitoring
