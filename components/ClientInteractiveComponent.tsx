@@ -8,6 +8,7 @@ export default function ClientInteractiveComponent() {
             // This function should be defined elsewhere and is expected to possibly throw an error.
 			throw new Error("error");
         } catch (err) {
+        console.log('Button error');
             Sentry.captureException(err);
         }
         console.log('Button clicked!');
