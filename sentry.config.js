@@ -19,6 +19,6 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
 });
 
-const container = document.getElementById(“app”);
+const container = document.getElementById("app");
 const root = createRoot(container);
 root.render(<App />);
