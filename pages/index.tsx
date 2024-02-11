@@ -4,7 +4,7 @@ import { Integrations } from '@sentry/tracing';
 
 // Initialisation de Sentry
 Sentry.init({
-  dsn: "YOUR_DSN_HERE",
+  dsn: "https://10ccd191a3295803134853079761bdcb@o4506240525598720.ingest.sentry.io/4506713417711616",
   integrations: [
     new Integrations.BrowserTracing(),
   ],
