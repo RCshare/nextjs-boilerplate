@@ -6,7 +6,7 @@ export default function ClientInteractiveComponent() {
     const handleClick = () => {
         try {
             // This function should be defined elsewhere and is expected to possibly throw an error.
-            aFunctionThatMightFail();
+			throw new Error("error");
         } catch (err) {
             Sentry.captureException(err);
         }
