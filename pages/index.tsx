@@ -4,18 +4,14 @@ import { Integrations } from '@sentry/tracing';
 
 // Initialisation de Sentry
 Sentry.init({
-  dsn: "https://10ccd191a3295803134853079761bdcb@o4506240525598720.ingest.sentry.io/4506713417711616",
+  dsn: "YOUR_DSN_HERE",
   integrations: [
-    new Integrations.BrowserTracing(), // Correct integration setup
-    // Replay Integration is not directly available as shown in your initial code. If you're looking to use Sentry's session replay feature, you'll need to ensure you're using the correct SDK and feature set. Sentry's Session Replay might require additional setup or a different approach.
+    new Integrations.BrowserTracing(),
   ],
-  // Performance Monitoring
-  tracesSampleRate: 1.0, // Capture 100% of transactions
-  // Define which URLs distributed tracing should be enabled for
+  tracesSampleRate: 1.0,
   tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
-  // Session Replay
-  replaysSessionSampleRate: 0.1, // Sample rate at 10%. Adjust based on environment and needs.
-  replaysOnErrorSampleRate: 1.0, // 100% sample rate for sessions with errors.
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
 });
 
 const LoginForm: React.FC = () => {
@@ -27,14 +23,22 @@ const LoginForm: React.FC = () => {
     event.preventDefault();
 
     try {
-      // Simulate login process, replace with actual login logic
       if (email !== 'test@example.com' || password !== 'password') {
         throw new Error('Invalid credentials');
       }
-      // If login is successful, proceed with the application flow
     } catch (error) {
-      Sentry.captureException(error); // Log error to Sentry
+      Sentry.captureException(error);
       setError('An error occurred during login. Please try again.');
+    }
+  };
+
+  const throwError = () => {
+    try {
+      // Simulating a new error
+      throw new Error('This is a new error for Sentry');
+    } catch (error) {
+      Sentry.captureException(error); // Send this error to Sentry
+      setError('A new error has been thrown and sent to Sentry.');
     }
   };
 
@@ -61,6 +65,7 @@ const LoginForm: React.FC = () => {
           />
         </div>
         <button type="submit">Login</button>
+        <button type="button" onClick={throwError}>Throw Error</button>
       </form>
       {error && <div>{error}</div>}
     </div>
