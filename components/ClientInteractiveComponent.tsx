@@ -7,6 +7,15 @@ export default function ClientInteractiveComponent() {
   };
 
   return (
-    <button onClick={handleClick}>Click Me</button>
+    <button
+  type="button"
+  onClick={() => {
+    throw new Error("Sentry Test Error");
+  }}
+>
+  Break the world
+</button>
+
   );
 }
+
