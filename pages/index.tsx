@@ -1,6 +1,7 @@
 // pages/index.jsx or pages/index.tsx
 import React from 'react';
 import dynamic from 'next/dynamic';
+import '../sentry.config.js';
 
 // Dynamically import a component with client-side interactivity
 const ClientInteractiveComponent = dynamic(
